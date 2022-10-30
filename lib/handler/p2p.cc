@@ -50,7 +50,16 @@ auto P2PHandler::handle_put(Connection& con, const cloud::CloudMessage& msg)
     -> void {
   cloud::CloudMessage response{};
 
-  // TODO(you)
+  bool success = true;
+  for(const auto &kvp: msg.kvp()){
+    const std::string &k = msg.kvp()[0].key();
+    const std::string &v = msg.kvp()[0].value();
+    success &= kvs.put(k, v);
+  }
+
+  response.set_type(cloud::CloudMessage_Type_RESPONSE);
+  response.set_operation(cloud::CloudMessage_Operation_PUT);
+  response.set_success(success);
 
   con.send(response);
 }
@@ -59,7 +68,20 @@ auto P2PHandler::handle_get(Connection& con, const cloud::CloudMessage& msg)
     -> void {
   cloud::CloudMessage response{};
 
-  // TODO(you)
+  bool success = true;
+  for(const auto &kvp: msg.kvp()){
+    const std::string &k = msg.kvp()[0].key();
+    std::string v;
+    success &= kvs.get(k, v);
+    if(!success) break;
+    auto *tmp = response.add_kvp();
+    tmp->set_key(k);
+    tmp->set_value(v);
+  }
+
+  response.set_type(cloud::CloudMessage_Type_RESPONSE);
+  response.set_operation(cloud::CloudMessage_Operation_GET);
+  response.set_success(success);
 
   con.send(response);
 }
