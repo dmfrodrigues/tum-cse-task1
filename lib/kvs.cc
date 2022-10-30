@@ -43,8 +43,9 @@ auto KVS::put(const std::string& key, const std::string& value) -> bool {
  * Completly removes the DB
  */
 auto KVS::remove(const std::string& key) -> bool {
-  // TODO(you)
-  return {};
+  if(!open()) return false;
+  auto status = db->Delete(rocksdb::WriteOptions(), key);
+  return status.ok();
 }
 
 auto KVS::clear() -> bool {
