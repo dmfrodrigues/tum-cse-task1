@@ -38,7 +38,10 @@ class KVS {
    * should only return the path.
    */
   explicit KVS(const std::string& path = {}, bool open = false) : path{path} {
-    // TODO(you)
+    this->path = path;
+    if(!open){
+      KVS::open();
+    }
   }
 
   ~KVS();
