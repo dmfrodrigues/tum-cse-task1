@@ -24,8 +24,9 @@ auto KVS::open() -> bool {
 }
 
 auto KVS::get(const std::string& key, std::string& result) -> bool {
-  // TODO(you)
-  return {};
+  if(!open()) return false;
+  auto status = db->Get(rocksdb::ReadOptions(), key, &result);
+  return status.ok();
 }
 
 /*
@@ -33,8 +34,9 @@ auto KVS::get(const std::string& key, std::string& result) -> bool {
  * the server should open a new DB and insert the key-value pair
  */
 auto KVS::put(const std::string& key, const std::string& value) -> bool {
-  // TODO(you)
-  return {};
+  if(!open()) return false;
+  auto status = db->Put(rocksdb::WriteOptions(), key, value);
+  return status.ok();
 }
 
 /***
