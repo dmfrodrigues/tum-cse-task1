@@ -49,8 +49,12 @@ auto KVS::remove(const std::string& key) -> bool {
 }
 
 auto KVS::clear() -> bool {
-  // TODO(you)
-  return {};
+  auto it = db->NewIterator(rocksdb::ReadOptions());
+  for(it->SeekToFirst(); it->Valid(); it->Next()){
+    auto status = db->Delete(rocksdb::WriteOptions(), it->key());
+    if(!status.ok()) return false;
+  }
+  return true;
 }
 
 auto KVS::begin() -> KVS::Iterator {
