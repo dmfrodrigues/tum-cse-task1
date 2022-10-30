@@ -12,7 +12,12 @@ namespace cloudlab {
 auto KVS::open() -> bool {
   // only open db if it was not opened yet
   if (!db) {
-    // TODO(you)
+    char temp[] = "/tmp/kvsXXXXXX";
+    path = (path.empty() ? std::filesystem::path(mkdtemp(temp)) : path);
+    rocksdb::Options options;
+    options.create_if_missing = true;
+    rocksdb::Status status = rocksdb::DB::Open(options, path, &db);
+    assert(status.ok());
   }
 
   return true;
@@ -76,7 +81,7 @@ auto operator!=(const KVS::Iterator& lhs, const KVS::Sentinel& rhs) -> bool {
 }
 
 KVS::~KVS() {
-  // TODO(you)
+  delete db;
 }
 
 KVS::Iterator::~Iterator() {
