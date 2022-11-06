@@ -11,7 +11,7 @@
 #include <netdb.h>
 #include <unistd.h>
 
-const size_t MSG_MAX_SIZE = 1024;
+const size_t MSG_MAX_SIZE = 8192;
 
 namespace cloudlab {
 

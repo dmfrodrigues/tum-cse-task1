@@ -52,8 +52,8 @@ auto P2PHandler::handle_put(Connection& con, const cloud::CloudMessage& msg)
 
   bool success = true;
   for(const auto &kvp: msg.kvp()){
-    const std::string &k = msg.kvp()[0].key();
-    const std::string &v = msg.kvp()[0].value();
+    const std::string &k = kvp.key();
+    const std::string &v = kvp.value();
     success &= kvs.put(k, v);
   }
 
@@ -70,7 +70,7 @@ auto P2PHandler::handle_get(Connection& con, const cloud::CloudMessage& msg)
 
   bool success = true;
   for(const auto &kvp: msg.kvp()){
-    const std::string &k = msg.kvp()[0].key();
+    const std::string &k = kvp.key();
     std::string v;
     success &= kvs.get(k, v);
     if(!success) break;
@@ -92,7 +92,7 @@ auto P2PHandler::handle_delete(Connection& con, const cloud::CloudMessage& msg)
 
   bool success = true;
   for(const auto &kvp: msg.kvp()){
-    const std::string &k = msg.kvp()[0].key();
+    const std::string &k = kvp.key();
     std::string v;
     success &= kvs.remove(k);
     if(!success) break;

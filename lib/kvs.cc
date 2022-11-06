@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <random>
 
+#include <iostream>
+
 namespace cloudlab {
 
 auto KVS::open() -> bool {
@@ -49,17 +51,17 @@ auto KVS::remove(const std::string& key) -> bool {
 }
 
 auto KVS::clear() -> bool {
-  auto it = db->NewIterator(rocksdb::ReadOptions());
-  for(it->SeekToFirst(); it->Valid(); it->Next()){
-    auto status = db->Delete(rocksdb::WriteOptions(), it->key());
-    if(!status.ok()) return false;
+  for(const auto &p: *this){
+    remove(std::string(p.first));
   }
   return true;
 }
 
 auto KVS::begin() -> KVS::Iterator {
-  // TODO(you)
-  return {};
+  Iterator it;
+  it.dbIterator = db->NewIterator(rocksdb::ReadOptions());
+  it.dbIterator->SeekToFirst();
+  return it;
 }
 
 // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
@@ -69,18 +71,19 @@ auto KVS::end() const -> KVS::Sentinel {
 
 auto KVS::Iterator::operator*()
     -> std::pair<std::string_view, std::string_view> {
-  // TODO(you)(optional for task1, may be needed for other tasks)
-  return {};
+  return {
+    dbIterator->key().ToStringView(),
+    dbIterator->value().ToStringView()
+  };
 }
 
 auto KVS::Iterator::operator++() -> KVS::Iterator& {
-  // TODO(you)(optional for task1, may be needed for other tasks)
+  dbIterator->Next();
   return *this;
 }
 
 auto operator==(const KVS::Iterator& it, const KVS::Sentinel&) -> bool {
-  // TODO(you)(optional for task1, may be needed for other tasks)
-  return {};
+  return (!it.dbIterator->Valid());
 }
 
 auto operator!=(const KVS::Iterator& lhs, const KVS::Sentinel& rhs) -> bool {
@@ -92,7 +95,7 @@ KVS::~KVS() {
 }
 
 KVS::Iterator::~Iterator() {
-  // TODO(you)
+  delete dbIterator;
 }
 
 }  // namespace cloudlab

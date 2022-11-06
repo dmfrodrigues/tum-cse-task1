@@ -22,7 +22,7 @@ class KVS {
   struct Sentinel {};
 
   struct Iterator {
-    std::deque<rocksdb::Iterator*> iterators;
+    rocksdb::Iterator* dbIterator;
 
     ~Iterator();
 
