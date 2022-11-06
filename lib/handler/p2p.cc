@@ -90,7 +90,20 @@ auto P2PHandler::handle_delete(Connection& con, const cloud::CloudMessage& msg)
     -> void {
   cloud::CloudMessage response{};
 
-  // TODO(you)
+  bool success = true;
+  for(const auto &kvp: msg.kvp()){
+    const std::string &k = msg.kvp()[0].key();
+    std::string v;
+    success &= kvs.remove(k);
+    if(!success) break;
+    auto *tmp = response.add_kvp();
+    tmp->set_key(k);
+    tmp->set_value(v);
+  }
+
+  response.set_type(cloud::CloudMessage_Type_RESPONSE);
+  response.set_operation(cloud::CloudMessage_Operation_DELETE);
+  response.set_success(success);
 
   con.send(response);
 }
