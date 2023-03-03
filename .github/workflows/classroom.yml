@@ -12,6 +12,7 @@ jobs:
       - name: Install apt dependencies
         run: |
           sudo apt-get install -y \
+            libfmt-dev \
             libgtest-dev \
             protobuf-compiler
 
