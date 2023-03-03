@@ -12,9 +12,15 @@ jobs:
       - name: Install apt dependencies
         run: |
           sudo apt-get install -y \
-            libfmt-dev \
+            uild-essential \
+            cmake \
             libgtest-dev \
-            protobuf-compiler
+            librocksdb-dev \
+            libprotobuf-dev \
+            protobuf-compiler \
+            libpthread-stubs0-dev \
+            zlib1g-dev \
+            libevent-dev
 
       - name: Install python dependencies
         run: |
