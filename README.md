@@ -1,5 +1,7 @@
 # Task 1 - Single-node key-value store (KVS)
 
+[![GitHub Classroom Workflow](https://github.com/dmfrodrigues/tum-cse-task1/actions/workflows/classroom.yml/badge.svg)](https://github.com/dmfrodrigues/tum-cse-task1/actions/workflows/classroom.yml)
+
 In this task you will implement a single-node key-value store (KVS) 
 using [RocksDB](http://rocksdb.org/docs/getting-started.html).
 
