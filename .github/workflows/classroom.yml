@@ -11,10 +11,13 @@ jobs:
 
       - name: Install apt dependencies
         run: |
-          sudo apt-get install libgtest-dev
+          sudo apt-get install -y \
+            libgtest-dev \
+            protobuf-compiler
 
       - name: Install python dependencies
         run: |
-          sudo pip3 install psutil
+          sudo pip3 install \
+            psutil
 
       - uses: education/autograding@v1
