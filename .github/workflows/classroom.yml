@@ -12,8 +12,6 @@ jobs:
       - name: Install apt dependencies
         run: |
           sudo apt-get install -y \
-            uild-essential \
-            cmake \
             libgtest-dev \
             librocksdb-dev \
             libprotobuf-dev \
