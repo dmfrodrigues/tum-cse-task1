@@ -11,10 +11,10 @@ jobs:
 
       - name: Install apt dependencies
         run: |
-          apt-get install libgtest-dev
+          sudo apt-get install libgtest-dev
 
       - name: Install python dependencies
         run: |
-          pip3 install psutil
+          sudo pip3 install psutil
 
       - uses: education/autograding@v1
