@@ -12,13 +12,14 @@ jobs:
       - name: Install apt dependencies
         run: |
           sudo apt-get install -y \
+            libevent-dev \
+            libfmt-dev \
             libgtest-dev \
-            librocksdb-dev \
             libprotobuf-dev \
-            protobuf-compiler \
             libpthread-stubs0-dev \
-            zlib1g-dev \
-            libevent-dev
+            librocksdb-dev \
+            protobuf-compiler \
+            zlib1g-dev
 
       - name: Install python dependencies
         run: |
